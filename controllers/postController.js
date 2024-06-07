@@ -4,7 +4,7 @@ const CustomError = require("../exceptions/customError");
 const uniqueSlug = require("../utils/uniqueSlug");
 
 const store = async (req, res, next) => {
-  const { title, content, image, published } = req.body;
+  const { title, content, image, published, categoryId, tags } = req.body;
 
   const slug = await uniqueSlug(title);
 
@@ -14,10 +14,17 @@ const store = async (req, res, next) => {
     content,
     image,
     published,
+    category: {
+      connect: { id: categoryId },
+    },
+    tags: {
+      connect: tags.map((t) => ({ id: t })),
+    },
   };
 
   try {
     const post = await prisma.post.create({ data });
+
     res.status(200).json({
       message: "Post created successfully",
       post,
@@ -98,7 +105,7 @@ const index = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   const { slug } = req.params;
-  const { title, content, image, published } = req.body;
+  const { title, content, image, published, categoryId, tags } = req.body;
 
   const newSlug = await uniqueSlug(title);
 
@@ -108,6 +115,12 @@ const update = async (req, res, next) => {
     content,
     image,
     published,
+    category: {
+      connect: { id: categoryId },
+    },
+    tags: {
+      connect: tags.map((t) => ({ id: t })),
+    },
   };
 
   try {
