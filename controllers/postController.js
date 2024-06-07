@@ -40,14 +40,10 @@ const show = async (req, res, next) => {
   try {
     const post = await prisma.post.findUnique({ where: { slug: slug } });
 
-    if (post) {
-      res.status(200).json({
-        message: "Post found",
-        post,
-      });
-    } else {
-      return next(new CustomError("Post not found", 404));
-    }
+    res.status(200).json({
+      message: "Post found",
+      post,
+    });
   } catch (e) {
     return next(new CustomError(e.message, 500));
   }
