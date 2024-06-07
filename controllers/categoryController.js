@@ -31,7 +31,9 @@ const show = async (req, res, next) => {
     });
 
     if (!category) {
-      throw new ValidationError(`Can't find a Category with id ${id}`, 404);
+      return next(
+        new ValidationError(`Can't find a Category with id ${id}`, 404)
+      );
     }
 
     res.status(200).json({
@@ -47,7 +49,7 @@ const index = async (req, res, next) => {
   const { page = 1, limit = 5 } = req.query;
 
   const offset = (page - 1) * limit;
-  const totalItems = await prisma.post.count();
+  const totalItems = await prisma.category.count();
   const totalPages = Math.ceil(totalItems / limit);
 
   if (page > totalPages) {
@@ -85,7 +87,9 @@ const update = async (req, res, next) => {
     });
 
     if (!checkCategory) {
-      throw new ValidationError(`Can't find a Category with id ${id}`, 404);
+      return next(
+        new ValidationError(`Can't find a Category with id ${id}`, 404)
+      );
     }
 
     const category = await prisma.category.update({
@@ -111,7 +115,9 @@ const destroy = async (req, res, next) => {
     });
 
     if (!category) {
-      throw new ValidationError(`Can't find a Category with id ${id}`, 404);
+      return next(
+        new ValidationError(`Can't find a Category with id ${id}`, 404)
+      );
     }
 
     await prisma.category.delete({

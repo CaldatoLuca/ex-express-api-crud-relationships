@@ -1,5 +1,3 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
 const ValidationError = require("../exceptions/validationError");
 
 const bodyValidations = {
