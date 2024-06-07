@@ -5,6 +5,7 @@ const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 const postRouter = require("./routers/postRouter");
 const categoryRouter = require("./routers/categoryRouter");
+const tagRouter = require("./routers/tagRouter");
 
 require("dotenv").config();
 const { PORT } = process.env;
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 });
 app.use("/posts", postRouter);
 app.use("/categories", categoryRouter);
+app.use("/tags", tagRouter);
 
 app.use(notFound);
 app.use(errorHandler);
