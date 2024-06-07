@@ -38,7 +38,13 @@ const show = async (req, res, next) => {
   const { slug } = req.params;
 
   try {
-    const post = await prisma.post.findUnique({ where: { slug: slug } });
+    const post = await prisma.post.findUnique({
+      where: { slug: slug },
+      include: {
+        category: { select: { name: true } },
+        tags: { select: { name: true } },
+      },
+    });
 
     res.status(200).json({
       message: "Post found",
@@ -84,6 +90,10 @@ const index = async (req, res, next) => {
   try {
     const posts = await prisma.post.findMany({
       where,
+      include: {
+        category: { select: { name: true } },
+        tags: { select: { name: true } },
+      },
       take: parseInt(limit),
       skip: parseInt(offset),
     });
