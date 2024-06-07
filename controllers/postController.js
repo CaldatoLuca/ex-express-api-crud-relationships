@@ -6,19 +6,6 @@ const uniqueSlug = require("../utils/uniqueSlug");
 const store = async (req, res, next) => {
   const { title, content, image, published } = req.body;
 
-  if (typeof title !== "string") {
-    return next(new CustomError("Title must be a string", 400));
-  }
-  if (typeof content !== "string") {
-    return next(new CustomError("Content must be a string", 400));
-  }
-  if (typeof image !== "string") {
-    return next(new CustomError("Image must be a string", 400));
-  }
-  if (typeof published !== "boolean") {
-    return next(new CustomError("Published must be a boolean", 400));
-  }
-
   const slug = await uniqueSlug(title);
 
   const data = {
@@ -112,19 +99,6 @@ const index = async (req, res, next) => {
 const update = async (req, res, next) => {
   const { slug } = req.params;
   const { title, content, image, published } = req.body;
-
-  if (typeof title !== "string") {
-    return next(new CustomError("Title must be a string", 400));
-  }
-  if (typeof content !== "string") {
-    return next(new CustomError("Content must be a string", 400));
-  }
-  if (typeof image !== "string") {
-    return next(new CustomError("Image must be a string", 400));
-  }
-  if (typeof published !== "boolean") {
-    return next(new CustomError("Published must be a boolean", 400));
-  }
 
   const newSlug = await uniqueSlug(title);
 
